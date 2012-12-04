@@ -1,4 +1,4 @@
 ReplicaSiipo
 ============
 
-Intento de optimizar y mejorar las funcionalidades del SIIPO
+Intento de optimizar y mejorar las funciones del SIIPO
