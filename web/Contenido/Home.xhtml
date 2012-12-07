@@ -1,23 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
-          xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:h="http://java.sun.com/jsf/html"
-          xmlns:ui="http://java.sun.com/jsf/facelets"
-          xmlns:p="http://primefaces.org/ui">
-
-    <f:view>
-        <h:body>
-            <h:head></h:head>
-	       <h:form>
-                   Dah
-                   <p:growl id="growl" showDetail="true" life="500"/>                       
-                   <p:fileUpload fileUploadListener="#{controladores.GrowlBean.ListenerFU}" 
-                                 mode="advanced"  
-                                 update="growl"  
-                                 auto="true"                                   
-                                 allowTypes="/(\.|\/)(dbf)$/"/> 
-               </h:form>                        
-        </h:body>
-    </f:view>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"     
+      xmlns:t="http://myfaces.apache.org/tomahawk"      
+      xmlns:p="http://primefaces.org/ui">
+         
+      <h:body>
+          
+         <h:head><title>Test</title></h:head>
+         
+         <h:form id="example-form" enctype="multipart/form-data">                                       
+            <t:inputFileUpload id="bb" value="#{CArchivo.archivo}" validator="#{CArchivo.validarArchivo}" />            
+            <h:commandButton id="submit" type="submit" value="Subir Archivo" action="#{CArchivo.subir}" />                                                                                    
+         </h:form>    
+         
+         <h:form>             
+             <h:dataTable id="enviar" value="#{CArchivo.getDatosDats()}" var="c">
+                 <h:column>
+                     <f:facet name="header">Dato</f:facet>
+                     #{c.desc_ident}
+                 </h:column>  
+             </h:dataTable>
+         </h:form>
+         
+      </h:body>
+    
 </html>
