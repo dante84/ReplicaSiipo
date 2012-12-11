@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 import javax.sql.DataSource;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -47,7 +48,15 @@ public class CArchivo implements Serializable {
                        linea += (char)temp;    
                     
                        if( temp == '\n' ){ 
-                                                                                                                                                 
+                           
+                           Properties pro = new Properties();
+                           pro.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties"));
+                           String claveExamen = linea.substring(0,3);                           
+                           
+                           if( pro.containsKey(claveExamen) ){
+                               System.out.println( "Clave del examen " + claveExamen + " valor " + pro.get(claveExamen)); 
+                           }
+                           
                            FacesContext.getCurrentInstance().addMessage(
                                        null,
                                        //new FacesMessage(String.format("El archivo '%s' fue subido correctamente", nombreArchivo)
@@ -58,11 +67,11 @@ public class CArchivo implements Serializable {
                     
                   }
                   
-                  Connection conexion = ds.getConnection();                  
+                 /* Connection conexion = ds.getConnection();                  
                   Statement s = conexion.createStatement();
                   s.execute("insert into lectura_originales(desc_ident) values('" + linea +"')");
                   s.close();
-                  conexion.close();
+                  conexion.close();*/
                   
               }catch(Exception e){ e.printStackTrace(); }
                             

@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"     
-      xmlns:t="http://myfaces.apache.org/tomahawk"      
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:t="http://myfaces.apache.org/tomahawk">
          
       <h:body>
           
@@ -13,16 +12,7 @@
          <h:form id="example-form" enctype="multipart/form-data">                                       
             <t:inputFileUpload id="bb" value="#{CArchivo.archivo}" validator="#{CArchivo.validarArchivo}" />            
             <h:commandButton id="submit" type="submit" value="Subir Archivo" action="#{CArchivo.subir}" />                                                                                    
-         </h:form>    
-         
-         <h:form>             
-             <h:dataTable id="enviar" value="#{CArchivo.getDatosDats()}" var="c">
-                 <h:column>
-                     <f:facet name="header">Dato</f:facet>
-                     #{c.desc_ident}
-                 </h:column>  
-             </h:dataTable>
-         </h:form>
+         </h:form>                      
          
       </h:body>
     
