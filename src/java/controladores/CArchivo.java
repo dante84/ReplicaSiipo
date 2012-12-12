@@ -49,29 +49,46 @@ public class CArchivo implements Serializable {
                     
                        if( temp == '\n' ){ 
                            
-                           Properties pro = new Properties();
-                           pro.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties"));
-                           String claveExamen = linea.substring(0,3);                           
+                           Properties ptec = new Properties();
+                           Properties ppd = new Properties();
                            
-                           if( pro.containsKey(claveExamen) ){
-                               System.out.println( "Clave del examen " + claveExamen + " valor " + pro.get(claveExamen)); 
+                           ptec.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties"));
+                           ppd.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("posicionesdats.properties"));
+                           
+                           
+                           String claveExamen = linea.substring(0,3);                                                      
+                           
+                           if( ptec.containsKey(claveExamen) ){
+                               
+                               String ceo = ((String)ptec.get(claveExamen)).trim();
+                               System.out.println( "ceo " + ceo );
+                               System.out.println( "posIniApli " + (String)ppd.get(ceo));
+                               int posIniApli = Integer.valueOf((String)ppd.get(ceo));
+                               
+                               System.out.println( "Clave del examen " + claveExamen + " valor " + ptec.get(claveExamen)); 
+                               System.out.println( "Posicion de inicio " + posIniApli );
+                               System.out.println( "Aplicacion " + linea.substring(posIniApli,(posIniApli + 10)) ); 
+                               
                            }
-                           
-                           FacesContext.getCurrentInstance().addMessage(
-                                       null,
-                                       //new FacesMessage(String.format("El archivo '%s' fue subido correctamente", nombreArchivo)
-                                       new FacesMessage( " " + nombreArchivo + " agregado a la base")
-                           );              
-                         
+                                                                                          
                        }    
                     
                   }
                   
-                 /* Connection conexion = ds.getConnection();                  
-                  Statement s = conexion.createStatement();
-                  s.execute("insert into lectura_originales(desc_ident) values('" + linea +"')");
-                  s.close();
-                  conexion.close();*/
+                  FacesContext.getCurrentInstance().addMessage(null,
+                                                               //new FacesMessage(String.format("El archivo '%s' fue subido correctamente", nombreArchivo)
+                                                               new FacesMessage( " " + nombreArchivo + " agregado a la base")
+                  );  
+                  
+                  /*
+                   
+                     Connection conexion = ds.getConnection();                  
+                     Statement s = conexion.createStatement();
+                     s.execute("insert into lectura_originales(desc_ident) values('" + linea +"')");
+                     s.close();
+                     conexion.close();
+                      
+                  */
                   
               }catch(Exception e){ e.printStackTrace(); }
                             
