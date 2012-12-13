@@ -23,7 +23,8 @@ public class CArchivo implements Serializable {
        @Resource(name="jdbc/siipo")
        private DataSource ds;
        private UploadedFile archivo;
-       
+       private FacesContext context = FacesContext.getCurrentInstance();
+               
        public void subir(){
                      
               String nombreArchivo = FilenameUtils.getName(archivo.getName());
@@ -34,51 +35,56 @@ public class CArchivo implements Serializable {
               
               try{
                   
-                  byte[] bytes = archivo.getBytes();
-              
+                  byte[] bytes = archivo.getBytes();                                
+                  
                   for( int i = 0; i <= (bytes.length - 1); i++){
-                   
-                       temp = (char)bytes[i];
-                     
+                                          
+                       temp = (char)bytes[i];                       
+                       
                        if( temp == -1 ){                              
                 
                            break;
                        }
                     
-                       linea += (char)temp;    
-                    
+                       linea += (char)temp;                                               
+                       
                        if( temp == '\n' ){ 
                            
                            Properties ptec = new Properties();
-                           Properties ppd = new Properties();
+                           Properties ppd  = new Properties();
                            
                            ptec.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties"));
                            ppd.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("posicionesdats.properties"));
-                           
-                           
+                                                      
                            String claveExamen = linea.substring(0,3);                                                      
                            
                            if( ptec.containsKey(claveExamen) ){
                                
                                String ceo = ((String)ptec.get(claveExamen)).trim();
-                               System.out.println( "ceo " + ceo );
-                               System.out.println( "posIniApli " + (String)ppd.get(ceo));
                                int posIniApli = Integer.valueOf((String)ppd.get(ceo));
                                
-                               System.out.println( "Clave del examen " + claveExamen + " valor " + ptec.get(claveExamen)); 
-                               System.out.println( "Posicion de inicio " + posIniApli );
                                System.out.println( "Aplicacion " + linea.substring(posIniApli,(posIniApli + 10)) ); 
                                
+                               char[] caracteresLinea = linea.toCharArray();                              
+                               for( int k = posIniApli; k <= (caracteresLinea.length - 1); k++ ){
+                                    if( caracteresLinea[k] == ' '){ continue; }
+                                    else{ 
+                                         System.out.print(caracteresLinea[k] + " "); 
+                                    }
+                               }                               
+                               
+                               System.out.println(); 
+                               
+                           }else{ 
+                                 context.addMessage(null,new FacesMessage( "El archivo proporcionado no es valido. Verifica " )); 
+                                 return;
                            }
                                                                                           
                        }    
                     
                   }
                   
-                  FacesContext.getCurrentInstance().addMessage(null,
-                                                               //new FacesMessage(String.format("El archivo '%s' fue subido correctamente", nombreArchivo)
-                                                               new FacesMessage( " " + nombreArchivo + " agregado a la base")
-                  );  
+                  context.addMessage( null, new FacesMessage( " " + nombreArchivo + " agregado a la base"));  
                   
                   /*
                    
