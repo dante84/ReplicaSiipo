@@ -18,7 +18,7 @@ import modelos.ModeloPrueba;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
 
-public class CArchivo implements Serializable {        
+public class CArchivo implements Serializable {         
        
        @Resource(name="jdbc/siipo")
        private DataSource ds;
@@ -53,8 +53,8 @@ public class CArchivo implements Serializable {
                            Properties ptec = new Properties();
                            Properties ppd  = new Properties();
                            
-                           ptec.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties"));
-                           ppd.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("posicionesdats.properties"));
+                           ptec.load( Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties") );
+                           ppd.load(  Thread.currentThread().getContextClassLoader().getResourceAsStream("posicionesdats.properties")    );
                                                       
                            String claveExamen = linea.substring(0,3);                                                      
                            
@@ -68,9 +68,7 @@ public class CArchivo implements Serializable {
                                char[] caracteresLinea = linea.toCharArray();                              
                                for( int k = posIniApli; k <= (caracteresLinea.length - 1); k++ ){
                                     if( caracteresLinea[k] == ' '){ continue; }
-                                    else{ 
-                                         System.out.print(caracteresLinea[k] + " "); 
-                                    }
+                                    else{ System.out.print(caracteresLinea[k] + " "); }
                                }                               
                                
                                System.out.println(); 
@@ -87,7 +85,7 @@ public class CArchivo implements Serializable {
                   context.addMessage( null, new FacesMessage( " " + nombreArchivo + " agregado a la base"));  
                   
                   /*
-                   
+                     
                      Connection conexion = ds.getConnection();                  
                      Statement s = conexion.createStatement();
                      s.execute("insert into lectura_originales(desc_ident) values('" + linea +"')");
