@@ -6,6 +6,7 @@ package controladores;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -24,6 +25,8 @@ public class CArchivo implements Serializable {
        private DataSource ds;
        private UploadedFile archivo;
        private FacesContext context = FacesContext.getCurrentInstance();
+       private Connection conexion;
+       private Statement select,insert;
                
        public void subir(){
                      
@@ -31,7 +34,7 @@ public class CArchivo implements Serializable {
               System.out.println(nombreArchivo);                                                                                    
                
               String linea = "";                                                 
-              int temp = 0; 
+              int temp;
               
               try{
                   
@@ -41,10 +44,7 @@ public class CArchivo implements Serializable {
                                           
                        temp = (char)bytes[i];                       
                        
-                       if( temp == -1 ){                              
-                
-                           break;
-                       }
+                       if( temp == -1 ){ break; }
                     
                        linea += (char)temp;                                               
                        
@@ -67,8 +67,33 @@ public class CArchivo implements Serializable {
                                
                                char[] caracteresLinea = linea.toCharArray();                              
                                for( int k = posIniApli; k <= (caracteresLinea.length - 1); k++ ){
+                                   
                                     if( caracteresLinea[k] == ' '){ continue; }
-                                    else{ System.out.print(caracteresLinea[k] + " "); }
+                                    
+                                    else{ 
+                                        
+                                         conexion = ds.getConnection();
+                                         select = conexion.createStatement();
+                                         
+                                         String selectCadena = "select * from longitud_campos where clave_instrumento = " + claveExamen;                                         
+                                         ResultSet rs = select.executeQuery(selectCadena);
+                                         ResultSetMetaData rsmd = rs.getMetaData();
+                                         
+                                         while( rs.next() ){
+                                             
+                                                for( int j = 1; j <= rsmd.getColumnCount() ; j++ ){
+                                                     System.out.print(linea.substring(rs.getInt(j)));    
+                                                }                                                                                                
+                                               
+                                                System.out.println("");
+                                                
+                                         }
+                                         
+                                         select.close();
+                                         conexion.close();
+                                                                                  
+                                    }
+                                    
                                }                               
                                
                                System.out.println(); 
@@ -85,9 +110,7 @@ public class CArchivo implements Serializable {
                   context.addMessage( null, new FacesMessage( " " + nombreArchivo + " agregado a la base"));  
                   
                   /*
-                     
-                     Connection conexion = ds.getConnection();                  
-                     Statement s = conexion.createStatement();
+                                          
                      s.execute("insert into lectura_originales(desc_ident) values('" + linea +"')");
                      s.close();
                      conexion.close();
@@ -104,7 +127,7 @@ public class CArchivo implements Serializable {
               
               try{
                   
-                  Connection conexion = ds.getConnection();                  
+                  conexion = ds.getConnection();                  
                   Statement s = conexion.createStatement();
                   ResultSet rs = s.executeQuery("select desc_ident from lectura_originales");
                   
@@ -116,6 +139,7 @@ public class CArchivo implements Serializable {
                   
                   s.close();
                   conexion.close();
+                  
               }catch(Exception e){ e.printStackTrace(); } 
                
               return almp;
