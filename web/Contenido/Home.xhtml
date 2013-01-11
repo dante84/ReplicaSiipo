@@ -5,14 +5,24 @@
       xmlns:t="http://myfaces.apache.org/tomahawk"
       xmlns:ui="http://java.sun.com/jsf/facelets">
          
-      <h:body>
+      <h:head>
+              <h:outputStylesheet library="css" name="estilo.css"/>
+      </h:head>
+    
+      <h:body>          
           
          <ui:include src="../plantillas/cuerpo.xhtml" />
          
-         <h:form id="example-form" enctype="multipart/form-data">                                       
-            <t:inputFileUpload id="bb" value="#{CArchivo.archivo}" validator="#{CArchivo.validarArchivo}" />            
-            <h:commandButton id="submit" type="submit" value="Subir Archivo" actionListener="#{CArchivo.subir}" />                            
-         </h:form>                      
+         <h:panelGroup layout="block" id="contenedor_centrado" class="div_forma">
+             
+             <span id="texto_span" class="texto_centrado"> Test de Estilo </span>
+              
+             <h:form id="example-form" enctype="multipart/form-data" class="forma">                                       
+                <t:inputFileUpload id="bb" value="#{CArchivo.archivo}" validator="#{CArchivo.validarArchivo}" />            
+                <h:commandButton id="submit" type="submit" value="Subir Archivo" actionListener="#{CArchivo.subir}" />                            
+             </h:form>                      
+              
+         </h:panelGroup>     
          
       </h:body>
     

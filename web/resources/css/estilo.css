@@ -1,0 +1,27 @@
+/* 
+    Document   : estilo
+    Created on : 10/01/2013, 01:15:54 PM
+    Author     : Daniel.Meza
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.div_forma{
+    margin-top: 125px;
+    width: 50%; 
+    height: 20px;
+}
+
+#contenedor_centrado{
+    margin-left: auto;
+    margin-right: auto;       
+}
+
+#texto_span{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.texto_centrado{
+    text-align: left;
+}
