@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData; 
 import java.sql.Statement; 
 import java.util.ArrayList; 
-import java.util.List;
+import java.util.List; 
 import java.util.Properties; 
 import javax.sql.DataSource; 
 import javax.annotation.Resource; 
@@ -39,7 +39,7 @@ public class CArchivo implements Serializable {
                   
                   int l = 1;
                   
-                  for( String linea: datos ){
+                  for( String linea: datos ){ 
                       
                        //System.out.println(l + "Linea : " + linea);
                                                               
@@ -48,7 +48,7 @@ public class CArchivo implements Serializable {
                            
                        ptec.load( Thread.currentThread().getContextClassLoader().getResourceAsStream("tiposexamenclaves.properties") ); 
                        ppd.load ( Thread.currentThread().getContextClassLoader().getResourceAsStream("posicionesdats.properties")    ); 
-                                                      
+                                                                                
                        String claveExamen = linea.substring(0,3);                                                                                                    
                            
                        if( ptec.containsKey(claveExamen) ){                               

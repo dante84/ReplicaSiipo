@@ -11,6 +11,19 @@
           <managed-bean-name>CArchivo</managed-bean-name>  
           <managed-bean-class>controladores.CArchivo</managed-bean-class>        
           <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>  
+    
+    <managed-bean>  
+          <managed-bean-name>CLogin</managed-bean-name>  
+          <managed-bean-class>controladores.CLogin</managed-bean-class>        
+          <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>  
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>name</from-outcome>
+            <to-view-id>/Home.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 
 </faces-config>

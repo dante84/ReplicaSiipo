@@ -6,10 +6,12 @@
      
     <ui:include src="plantillas/cuerpo.xhtml" />
     
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="Contenido/Home" value="Primefaces welcome page" />
+    <h:body>                
+        
+        <h:form>
+            Usuario: <h:inputText maxlength="40" value="#{CLogin.nombre}"/> 
+            <h:commandButton value="Enviar" type="submit" actionListener="#{CLogin.validarLogin}"/>
+        </h:form>
     </h:body>
 </html>
 
